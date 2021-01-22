@@ -265,6 +265,10 @@ size_t elog_async_get_line_log(char *log, size_t size);
 size_t elog_strcpy(size_t cur_len, char *dst, const char *src);
 size_t elog_cpyln(char *line, const char *log, size_t len);
 void *elog_memcpy(void *dst, const void *src, size_t count);
+/* elog_file.c */
+void elog_set_file_enabled(bool enabled);
+/* set the file output path before elog_start */
+void elog_set_file_path(const char* path);
 
 #ifdef __cplusplus
 }
