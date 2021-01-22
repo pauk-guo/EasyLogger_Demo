@@ -4,8 +4,6 @@
 #include <iostream>
 #include <windows.h>
 #include "elog.h"
-#include <io.h>
-#include <direct.h>
 
 static void test_elog(void);
 
