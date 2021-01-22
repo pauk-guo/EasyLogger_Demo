@@ -4,6 +4,8 @@
 #include <iostream>
 #include <windows.h>
 #include "elog.h"
+#include <io.h>
+#include <direct.h>
 
 static void test_elog(void);
 
@@ -18,7 +20,8 @@ int main()
     elog_set_fmt(ELOG_LVL_INFO, ELOG_FMT_LVL | ELOG_FMT_TAG | ELOG_FMT_TIME);
     elog_set_fmt(ELOG_LVL_DEBUG, ELOG_FMT_ALL & ~ELOG_FMT_FUNC);
     elog_set_fmt(ELOG_LVL_VERBOSE, ELOG_FMT_ALL & ~ELOG_FMT_FUNC);
-    elog_set_file_path("F:\\Git\\qtPro");
+    elog_set_file_path("F:/Git/qtPro/qtPro1/qtPro2/qtPro3");
+    
     /* start EasyLogger */
     elog_start();
     /* dynamic set enable or disable for output logs (true or false) */
