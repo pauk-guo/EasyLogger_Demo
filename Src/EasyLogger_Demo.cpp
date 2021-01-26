@@ -5,7 +5,42 @@
 #include <windows.h>
 #include "elog.h"
 
+
+enum class LOG_LEVEL {
+    LOG_LVL_ASSERT = 0,
+    LOG_LVL_ERROR = 1,
+    LOG_LVL_WARN = 2,
+    LOG_LVL_INFO = 3,
+    LOG_LVL_DEBUG = 4,
+    LOG_LVL_VERBOSE = 5
+};
+
 static void test_elog(void);
+void write_log(LOG_LEVEL type, const char* file, const char* func, const long line, const char* strLog);
+#define WRITE_LOG_A(strLog)                                                             \
+{                                                                                       \
+    write_log(LOG_LEVEL::LOG_LVL_ASSERT, __FILE__, __FUNCTION__, __LINE__, strLog);	    \
+}
+#define WRITE_LOG_E(strLog)                                                             \
+{                                                                                       \
+    write_log(LOG_LEVEL::LOG_LVL_ERROR, __FILE__, __FUNCTION__, __LINE__, strLog);      \
+}
+#define WRITE_LOG_W(strLog)                                                             \
+{                                                                                       \
+    write_log(LOG_LEVEL::LOG_LVL_WARN, __FILE__, __FUNCTION__, __LINE__, strLog);       \
+}
+#define WRITE_LOG_I(strLog)                                                             \
+{                                                                                       \
+    write_log(LOG_LEVEL::LOG_LVL_INFO, __FILE__, __FUNCTION__, __LINE__, strLog);       \
+}
+#define WRITE_LOG_D(strLog)                                                             \
+{                                                                                       \
+    write_log(LOG_LEVEL::LOG_LVL_DEBUG, __FILE__, __FUNCTION__, __LINE__, strLog);      \
+}
+#define WRITE_LOG_V(strLog)                                                             \
+{                                                                                       \
+    write_log(LOG_LEVEL::LOG_LVL_VERBOSE, __FILE__, __FUNCTION__, __LINE__, strLog);	\
+}
 
 int main()
 {
@@ -51,7 +86,42 @@ void test_elog(void) {
         log_i("Hello EasyLogger INFO!");
         log_d("Hello EasyLogger DEBUG!");
         log_v("Hello EasyLogger VERBOSE!");
-        //        elog_raw("Hello EasyLogger!");
+
+        WRITE_LOG_A("WRITE Hello EasyLogger ASSERT!");
+        WRITE_LOG_E("WRITE Hello EasyLogger ERROR!");
+        WRITE_LOG_W("WRITE Hello EasyLogger WARN!");
+        WRITE_LOG_I("WRITE Hello EasyLogger INFO!");
+        WRITE_LOG_D("WRITE Hello EasyLogger DEBUG!");
+        WRITE_LOG_V("WRITE Hello EasyLogger VERBOSE!");
+
         Sleep(1000);
+    }
+    
+}
+
+void write_log(LOG_LEVEL type, const char* file, const char* func, const long line, const char* strLog)
+{
+    switch (type) {
+    case LOG_LEVEL::LOG_LVL_ASSERT:
+        log_a_i(file, func, line, strLog);
+        break;
+    case LOG_LEVEL::LOG_LVL_ERROR:
+        log_e_i(file, func, line, strLog);
+        break;
+    case LOG_LEVEL::LOG_LVL_WARN:
+        log_w_i(file, func, line, strLog);
+        break;
+    case LOG_LEVEL::LOG_LVL_INFO:
+        log_i_i(file, func, line, strLog);
+        break;
+    case LOG_LEVEL::LOG_LVL_DEBUG:
+        log_d_i(file, func, line, strLog);
+        break;
+    case LOG_LEVEL::LOG_LVL_VERBOSE:
+        log_v_i(file, func, line, strLog);
+        break;
+    default:
+        log_i_i(file, func, line, strLog);
+        break;
     }
 }
